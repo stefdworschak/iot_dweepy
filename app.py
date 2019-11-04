@@ -6,6 +6,8 @@ from grovepi import *
 from grove_rgb_lcd import *
 import dweepy
 
+import mongo_db as m
+
 # Digital input ports
 # SIG,NC,VCC,GND
 led = 5
@@ -76,6 +78,7 @@ while True:
             thing_id = json_data['thing_id']
             temp['location'] = json_data['location']
 
+        m.insert_into(temp)
         print(json.dumps(temp))
         
         #if last != temp:
