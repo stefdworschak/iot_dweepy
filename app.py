@@ -71,12 +71,10 @@ while True:
 
         # Open file with static data and add it to the dataset 
 
-        #with open('data.json') as file:
-        #    print(file.read())
-            #json_data = json.loads(file.read())
-            #print(json_data)
-            #thing_id = temp['thing_id']
-            #temp['location'] = temp['location']
+        with open('data.json') as file:
+            json_data = json.loads(file.read())
+            thing_id = json_data['thing_id']
+            temp['location'] = json_data['location']
 
         print(json.dumps(temp))
         
