@@ -4,6 +4,7 @@ import json
 import grovepi
 from grovepi import *
 from grove_rgb_lcd import *
+import dweepy
 
 # Digital input ports
 # SIG,NC,VCC,GND
@@ -38,6 +39,8 @@ sound_threshold = 400
 grovepi.pinMode(light_sensor,"INPUT")
 grovepi.pinMode(sound_sensor,"INPUT")
 
+last = {}
+
 while True:
     try:
         temp = {}
@@ -66,7 +69,18 @@ while True:
         temp['temperature'] = tempr
         temp['humidity'] = hum
 
+        # Open file with static data and add it to the dataset 
+
+        with open('data.json') as file:
+            json_data = json.loads(file.read())
+            thing_id = temp['thing_id']
+            temp['location'] = temp['location']
+
         print(json.dumps(temp))
+        
+        if last != temp:
+            #dweepy.dweet_for('dwo_iot_BzEsQxDrq0',temp)
+        
         # Set a timeout of one second
         time.sleep(1)
 
