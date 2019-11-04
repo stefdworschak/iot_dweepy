@@ -71,8 +71,8 @@ while True:
 
         # Open file with static data and add it to the dataset 
 
-        with open('data.json') as file:
-            print(file.read())
+        #with open('data.json') as file:
+        #    print(file.read())
             #json_data = json.loads(file.read())
             #print(json_data)
             #thing_id = temp['thing_id']
