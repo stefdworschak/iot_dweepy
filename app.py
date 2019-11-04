@@ -13,6 +13,7 @@ led = 5
 # SIG,NC,VCC,GND
 potentiometer = 0
 light_sensor = 1
+sound_sensor = 2
 #emperatur_sensor = 1
 
 dht_sensor_port = 7
@@ -31,7 +32,11 @@ grove_vcc = 5
 # Full value of the rotary angle is 300 degrees, as per it's specs (0 to 300)
 full_angle = 300
 
+# Threshold value to decide if it is loud or not
+sound_threshold = 400
+
 grovepi.pinMode(light_sensor,"INPUT")
+grovepi.pinMode(sound_sensor,"INPUT")
 
 while True:
     try:
@@ -39,6 +44,7 @@ while True:
         # Retrieve the potentiometer value
         potentiometer_value = grovepi.analogRead(potentiometer)
         light_sensor_value = grovepi.analogRead(light_sensor)
+        sound_sensor_value = grovepi.analogRead(sound_sensor)
         #temperature_value = grovepi.temp(temperatur_sensor,'1.1')
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
 
@@ -54,6 +60,8 @@ while True:
         temp['voltage'] = voltage
         temp['degrees'] = degrees
         temp['illuminance'] = light_sensor_value
+        temp['sound_value'] = sound_sensor_value
+        temp['sound_category'] = 'loud' if sound_sensor_value > sound_threshold else 'silent'
         #temp['brightness'] = brightness
         temp['temperature'] = tempr
         temp['humidity'] = hum
