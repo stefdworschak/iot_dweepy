@@ -78,7 +78,7 @@ while True:
 
         print(json.dumps(temp))
         
-        if last != temp:
+        #if last != temp:
             #dweepy.dweet_for('dwo_iot_BzEsQxDrq0',temp)
         
         # Set a timeout of one second
