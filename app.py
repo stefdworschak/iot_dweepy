@@ -78,8 +78,9 @@ while True:
             thing_id = json_data['thing_id']
             temp['location'] = json_data['location']
 
-        m.insert_into(temp)
-        print(json.dumps(temp))
+        response = m.insert_into(temp)
+        print(temp)
+        #print(json.dumps(temp))
         
         #if last != temp:
             #dweepy.dweet_for('dwo_iot_BzEsQxDrq0',temp)

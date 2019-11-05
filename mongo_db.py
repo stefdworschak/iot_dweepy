@@ -8,5 +8,7 @@ def insert_into(record):
 
     try:
         x = col.insert_one(record)
+        return True
     except Exception as e:
         print(str(e))
+        return False
