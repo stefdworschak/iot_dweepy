@@ -5,4 +5,4 @@ def insert_into(record):
     db = myclient['iot_dweepy']
     col = db['records']
 
-    #x = col.insert_one(record)
+    x = col.insert_one(record)
