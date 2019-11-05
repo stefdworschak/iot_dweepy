@@ -7,6 +7,6 @@ def insert_into(record):
     col = db['records']
 
     try:
-        x = col.insert_one(json.dumps(record))
+        x = col.insert_one(record)
     except Exception as e:
         print(str(e))
