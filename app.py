@@ -14,12 +14,12 @@ led = 5
 
 # Analog input ports
 # SIG,NC,VCC,GND
-potentiometer = 0
+potentiometer = 0 # Angle sensor
 light_sensor = 1
 sound_sensor = 2
 #emperatur_sensor = 1
 
-dht_sensor_port = 7
+dht_sensor_port = 7 # Temperature and Humidity sensor
 dht_sensor_type = 0
 
 ###################
