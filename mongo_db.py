@@ -6,4 +6,7 @@ def insert_into(record):
     db = myclient['iot_dweepy']
     col = db['records']
 
-    x = col.insert_one(json.dumps(record))
+    try:
+        x = col.insert_one(json.dumps(record))
+    except Exception:
+        print(Exception)
