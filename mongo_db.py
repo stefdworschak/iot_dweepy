@@ -8,5 +8,5 @@ def insert_into(record):
 
     try:
         x = col.insert_one(json.dumps(record))
-    except Exception:
-        print(Exception)
+    except Exception as e:
+        print(str(e))
