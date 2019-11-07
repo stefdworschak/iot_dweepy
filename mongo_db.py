@@ -7,7 +7,7 @@ def insert_into(record):
     col = db['records']
 
     try:
-        x = col.insert_one(record)
+        x = col.insert(record)
         return True
     except Exception as e:
         print(str(e))
