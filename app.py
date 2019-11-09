@@ -65,9 +65,9 @@ while True:
 
         url = "https://dweet.io/dweet/for/test_"+thing_id
         # Create two threads as follows
-        try:
+        #try:
             thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
-        except:
+       # except:
             print("Error: unable to start thread")
 
         response = m.insert_into(temp)
