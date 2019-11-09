@@ -131,17 +131,17 @@ while True:
         last = temp
         time.sleep(1)
 
-    except (IOError, TypeError) as e:
-        print(str(e))
-        setText("")
-        setRGB(0,0,0)
-        break
+    #except (IOError, TypeError) as e:
+    #    print(str(e))
+    #    setText("")
+    #    setRGB(0,0,0)
+    #    break
 
-    except KeyboardInterrupt:
-        setText("")
-        setRGB(0,0,0)
-        #setText_norefresh(datetime.datetime.now().isoformat())
-        #grovepi.analogWrite(led,0)
-        break
+    #except KeyboardInterrupt:
+    #    setText("")
+    #    setRGB(0,0,0)
+    #    #setText_norefresh(datetime.datetime.now().isoformat())
+    #    #grovepi.analogWrite(led,0)
+    #    break
     
 
