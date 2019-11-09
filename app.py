@@ -131,6 +131,7 @@ while True:
         last = temp
         time.sleep(1)
 
+    print("hey")
     #except (IOError, TypeError) as e:
     #    print(str(e))
     #    setText("")
