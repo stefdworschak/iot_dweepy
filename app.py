@@ -59,7 +59,7 @@ prevDegrees = 0
 while True:
     try:
         temp = {}
-
+        print("hey")
         # Retrieve the potentiometer value
         #potentiometer_value = grovepi.analogRead(potentiometer)
         light_sensor_value = grovepi.analogRead(light_sensor)
