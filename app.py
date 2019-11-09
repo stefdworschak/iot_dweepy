@@ -97,6 +97,8 @@ while True:
         time.sleep(1)
 
     except KeyboardInterrupt:
+        setText("")
+        #setText_norefresh(datetime.datetime.now().isoformat())
         #grovepi.analogWrite(led,0)
         break
     except IOError:
