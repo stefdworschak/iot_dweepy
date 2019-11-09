@@ -1,4 +1,4 @@
-dweetio.get_latest_dweet_for("dwo_iot_BzEsQxDrq0",function(err,dweet){
+dweetio.get_latest_dweet_for("test_dwo_iot_BzEsQxDrq0",function(err,dweet){
     
     var dweet = dweet[0];
     console.log(dweet);

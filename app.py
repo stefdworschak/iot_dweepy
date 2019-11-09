@@ -117,15 +117,16 @@ while True:
             thing_id = json_data['thing_id']
             temp['location'] = json_data['location']
 
-        print(temp)
+        #print(temp)
         url = "https://dweet.io/dweet/for/test_"+thing_id
         if last != temp:
             #dweepy.dweet_for(thing_id,temp)
-            grequests.post(url, data=temp)
+            res = grequests.post(url, data=temp)
+            print(res)
             #print(res)
 
         response = m.insert_into(temp)
-        print(temp)
+        #print(temp)
 
         # Set a timeout of one second
         last = temp
