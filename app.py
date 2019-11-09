@@ -1,6 +1,7 @@
 import time
 import json
 import datetime
+import grequests
 
 import grovepi
 from grovepi import *
@@ -21,6 +22,8 @@ light_sensor = 1 # Light sensor on A1
 #sound_sensor = 2 # Sound sensor on A2
 #emperatur_sensor = 1
 button_sensor = 3
+
+
 
 # Setting the sensor type for the Temperature and Humidity Sensor
 dht_sensor_type = 0
@@ -44,6 +47,8 @@ sound_threshold = 400
 
 grovepi.pinMode(light_sensor,"INPUT")
 grovepi.pinMode(button_sensor,"INPUT")
+
+# LCD is on port I2C-1
 setRGB(0,255,0)
 
 last = {}
@@ -113,8 +118,10 @@ while True:
             temp['location'] = json_data['location']
 
         print(temp)
+        url = "https://dweet.io/dweet/for/test_"+thing_id
         if last != temp:
-            res = dweepy.dweet_for(thing_id,temp)
+            #dweepy.dweet_for(thing_id,temp)
+            grequests.post(url, data=temp)
             print(res)
 
         response = m.insert_into(temp)
@@ -122,7 +129,7 @@ while True:
 
         # Set a timeout of one second
         last = temp
-        time.sleep(0.5)
+        time.sleep(1)
 
     except (IOError, TypeError) as e:
         print(str(e))
