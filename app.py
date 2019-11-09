@@ -95,9 +95,9 @@ while True:
 
         #setText_norefresh("")
         if light_sensor_value > 400:
-            setText_norefresh("Alarm! Alarm!\nGet up tha fuck!\n")
+            setText_norefresh("Alarm! Alarm!    \nGet up tha fuck!    \n")
         else:
-            setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"\n")
+            setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "    \n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
 
         # Set the brightness for the LED
         #grovepi.analogWrite(led,brightness)
