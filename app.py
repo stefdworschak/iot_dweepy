@@ -62,12 +62,13 @@ while True:
         print(button_sensor_value)
 
         print("prev Button" + str(prevBtn))
-        if (prevBtn + button_sensor_value) == 3:
+        if (prevBtn + button_sensor_value) == 3 or menuActive == 1:
             setText_norefresh("Menu")
-            prevBtn += button_sensor_value
+            menuActive = 1
         else:
             #Set Time on LCD
             setText_norefresh(datetime.datetime.now().isoformat())
+            prevBtn += button_sensor_value
 
 
 
@@ -84,7 +85,7 @@ while True:
         temp['voltage'] = voltage
         temp['degrees'] = degrees
         temp['illuminance'] = light_sensor_value
-        temp['button_value'] = button_sensor
+        temp['button_value'] = button_sensor_value
         #temp['sound_value'] = sound_sensor_value
         #temp['sound_category'] = 'loud' if sound_sensor_value > sound_threshold else 'silent'
         #temp['brightness'] = brightness
