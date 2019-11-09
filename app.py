@@ -49,6 +49,7 @@ setRGB(0,255,0)
 last = {}
 prevBtn = 0
 menuActive = 0
+prevDegrees = 0
 
 while True:
     try:
@@ -59,23 +60,28 @@ while True:
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
         button_sensor_value = grovepi.digitalRead(button_sensor)
-        print(button_sensor_value)
 
-        print("prev Button" + str(prevBtn))
-        if (prevBtn + button_sensor_value) == 3 or menuActive == 1:
-            setText_norefresh("Menu")
+        # Retrieve secondary values based on potentiometer
+        voltage = round((float)(potentiometer_value) * adc_ref / 1023, 2)
+        degrees = round((voltage * full_angle) / grove_vcc, 2)
+
+        #print("prev Button" + str(prevBtn))
+
+        if (prevBtn + button_sensor_value) == 2 or menuActive == 1:
+            print("Degree Change: "+str(prevDegrees-degrees))
+            setText_norefresh("Menu\n\rDegrees: "+str(degrees))
+
             menuActive = 1
         else:
             #Set Time on LCD
             setText_norefresh(datetime.datetime.now().isoformat())
             prevBtn += button_sensor_value
+            prevDegrees = degrees
 
 
 
 
-        # Retrieve secondary values based on potentiometer
-        voltage = round((float)(potentiometer_value) * adc_ref / 1023, 2)
-        degrees = round((voltage * full_angle) / grove_vcc, 2)
+
         #brightness = int(degrees / full_angle * 255)
 
         # Set the brightness for the LED
@@ -108,7 +114,7 @@ while True:
 
 
         # Set a timeout of one second
-        time.sleep(1)
+        time.sleep(0.5)
 
     except (IOError, TypeError) as e:
         print(str(e))
