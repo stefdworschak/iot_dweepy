@@ -114,7 +114,8 @@ while True:
 
         print(temp)
         if last != temp:
-            dweepy.dweet_for(thing_id,temp)
+            res = dweepy.dweet_for(thing_id,temp)
+            print(res)
 
         response = m.insert_into(temp)
         print(temp)
