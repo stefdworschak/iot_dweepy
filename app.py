@@ -123,7 +123,7 @@ while True:
         if last != temp:
             #dweepy.dweet_for(thing_id,temp)
             res = grequests.post(url, data=temp)
-            print(grequests.map([res]))
+            #print(grequests.map([res]))
             #print(res)
 
         response = m.insert_into(temp)
