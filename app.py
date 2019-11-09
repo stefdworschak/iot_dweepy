@@ -112,12 +112,12 @@ while True:
             thing_id = json_data['thing_id']
             temp['location'] = json_data['location']
 
+        print(temp)
+        if last != temp:
+            dweepy.dweet_for(json.dumps(thing_id,temp))
+
         response = m.insert_into(temp)
         print(temp)
-        
-        if last != temp:
-            dweepy.dweet_for(thing_id,temp)
-        
 
         # Set a timeout of one second
         last = temp
