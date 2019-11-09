@@ -34,12 +34,12 @@ last = {}
 prevBtn = 0
 menuActive = 0
 prevDegrees = 0
-threads = 0
+thread_id = 0
 
 while True:
     try:
         temp = {}
-        thread += 1
+        thread_id += 1
 
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
@@ -66,7 +66,7 @@ while True:
         url = "https://dweet.io/dweet/for/test_"+thing_id
         # Create two threads as follows
         try:
-            thread.start_new_thread( send_info, ("Thread-"+str(thread), url, ) )
+            thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
         except:
             print("Error: unable to start thread")
 
