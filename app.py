@@ -66,6 +66,14 @@ while True:
         url = "https://dweet.io/dweet/for/test_"+thing_id
         # Create two threads as follows
         #try:
+
+        def send_info(threadname, url):
+            print(url)
+            if last != temp:
+                #dweepy.dweet_for(thing_id,temp)
+                res = grequests.post(url, data=temp)
+                print(grequests.map([res]))
+
         thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
        # except:
         print("Error: unable to start thread")
@@ -93,13 +101,4 @@ while True:
         setRGB(0,0,0)
         #setText_norefresh(datetime.datetime.now().isoformat())
         #grovepi.analogWrite(led,0)
-        break  
-
-
-
-def send_info(threadname, url):
-    print(url)
-    if last != temp:
-        #dweepy.dweet_for(thing_id,temp)
-        res = grequests.post(url, data=temp)
-        print(grequests.map([res]))
+        break
