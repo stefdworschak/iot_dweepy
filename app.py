@@ -88,7 +88,11 @@ while True:
         #    prevBtn += button_sensor_value
         #    prevDegrees = degrees
 
-        setText_norefresh("Date" + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('H:%M:%S'))
+        
+        if light_sensor_value > 400:
+            setText_norefresh("Alarm! Alarm! Alarm!\nGet up tha fuck!")
+        else:
+            setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S'))
 
 
 
