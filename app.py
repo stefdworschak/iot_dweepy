@@ -69,9 +69,11 @@ while True:
 
         if (prevBtn + button_sensor_value) == 2 or menuActive == 1:
             print("Degree Change: "+str(prevDegrees-degrees))
+            print(prevDegrees)
+            print(degrees)
             setText_norefresh("")
             setText_norefresh("Menu\nDegrees: "+str(prevDegrees-degrees))
-
+            prevDegrees = degrees
             menuActive = 1
         else:
             #Set Time on LCD
