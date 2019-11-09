@@ -93,7 +93,7 @@ while True:
         #    prevBtn += button_sensor_value
         #    prevDegrees = degrees
 
-        
+        setText_norefresh("")
         if light_sensor_value > 400:
             setText_norefresh("Alarm! Alarm!\nGet up tha fuck!")
         else:
@@ -134,6 +134,7 @@ while True:
     except (IOError, TypeError) as e:
         print(str(e))
         setText("")
+        setRGB(0,0,0)
         break
 
     except KeyboardInterrupt:
