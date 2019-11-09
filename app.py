@@ -88,7 +88,7 @@ while True:
         #    prevBtn += button_sensor_value
         #    prevDegrees = degrees
 
-        setText_norefresh("Date", datetime.datetime.now().strftime('%Y-%m-%d'), "\n Time: ", datetime.datetime.now().strftime('H:%M:%S'))
+        setText_norefresh("Date" + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('H:%M:%S'))
 
 
 
