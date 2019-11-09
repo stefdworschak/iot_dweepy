@@ -59,6 +59,7 @@ while True:
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
         button_sensor = grovepi.digitalRead(button_sensor)
+        print(button_sensor)
 
         print("prev Button" + str(prevBtn))
         if (prevBtn + button_sensor) == 3:
