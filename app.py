@@ -20,7 +20,7 @@ potentiometer = 0 # Angle sensor on A0
 light_sensor = 1 # Light sensor on A1
 #sound_sensor = 2 # Sound sensor on A2
 #emperatur_sensor = 1
-button_sensor = 4
+button_sensor = 3
 
 # Setting the sensor type for the Temperature and Humidity Sensor
 dht_sensor_type = 0
