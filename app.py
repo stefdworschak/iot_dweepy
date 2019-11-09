@@ -93,11 +93,11 @@ while True:
         #    prevBtn += button_sensor_value
         #    prevDegrees = degrees
 
-        setText_norefresh("")
+        #setText_norefresh("")
         if light_sensor_value > 400:
-            setText_norefresh("Alarm! Alarm!\nGet up tha fuck!")
+            setText_norefresh("Alarm! Alarm!\nGet up tha fuck!\n")
         else:
-            setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S'))
+            setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"\n")
 
         # Set the brightness for the LED
         #grovepi.analogWrite(led,brightness)
@@ -129,7 +129,7 @@ while True:
 
         # Set a timeout of one second
         last = temp
-        time.sleep(1)
+        time.sleep(0.5)
 
     except (IOError, TypeError, NameError) as e:
         print(str(e))
