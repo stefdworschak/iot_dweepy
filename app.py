@@ -96,11 +96,15 @@ while True:
         # Set a timeout of one second
         time.sleep(1)
 
+    except (IOError, TypeError) as e:
+        print(str(e))
+        setText("")
+        break
+
     except KeyboardInterrupt:
         setText("")
         #setText_norefresh(datetime.datetime.now().isoformat())
         #grovepi.analogWrite(led,0)
         break
-    except IOError:
-        break
+    
 
