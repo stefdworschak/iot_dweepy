@@ -119,10 +119,11 @@ while True:
 
         #print(temp)
         url = "https://dweet.io/dweet/for/test_"+thing_id
+        print(url)
         if last != temp:
             #dweepy.dweet_for(thing_id,temp)
             res = grequests.post(url, data=temp)
-            print(res)
+            print(grequests.map(res))
             #print(res)
 
         response = m.insert_into(temp)
