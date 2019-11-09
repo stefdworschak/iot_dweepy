@@ -90,14 +90,9 @@ while True:
 
         
         if light_sensor_value > 400:
-            setText_norefresh("Alarm! Alarm! Alarm!\nGet up tha fuck!")
+            setText_norefresh("Alarm! Alarm!\nGet up tha fuck!")
         else:
             setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S'))
-
-
-
-
-        #brightness = int(degrees / full_angle * 255)
 
         # Set the brightness for the LED
         #grovepi.analogWrite(led,brightness)
@@ -107,9 +102,6 @@ while True:
         temp['degrees'] = degrees
         temp['illuminance'] = light_sensor_value
         temp['button_value'] = button_sensor_value
-        #temp['sound_value'] = sound_sensor_value
-        #temp['sound_category'] = 'loud' if sound_sensor_value > sound_threshold else 'silent'
-        #temp['brightness'] = brightness
         temp['temperature'] = tempr
         temp['humidity'] = hum
 
@@ -123,12 +115,12 @@ while True:
         response = m.insert_into(temp)
         print(temp)
         
-        #if last != temp:
-            #dweepy.dweet_for('dwo_iot_BzEsQxDrq0',temp)
+        if last != temp:
+            dweepy.dweet_for(thing_id,temp)
         
 
-
         # Set a timeout of one second
+        last = temp
         time.sleep(0.5)
 
     except (IOError, TypeError) as e:
