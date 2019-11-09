@@ -69,7 +69,7 @@ while True:
 
         if (prevBtn + button_sensor_value) == 2 or menuActive == 1:
             print("Degree Change: "+str(prevDegrees-degrees))
-            setText("")
+            setText_norefresh("")
             setText_norefresh("Menu\nDegrees: "+str(degrees))
 
             menuActive = 1
