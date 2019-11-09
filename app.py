@@ -1,7 +1,7 @@
 import time
 import json
 import datetime
-#import grequests
+import grequests
 
 import grovepi
 from grovepi import *
@@ -67,8 +67,8 @@ while True:
         button_sensor_value = grovepi.digitalRead(button_sensor)
 
         # Retrieve secondary values based on potentiometer
-        voltage = round((float)(potentiometer_value) * adc_ref / 1023, 2)
-        degrees = round((voltage * full_angle) / grove_vcc, 2)
+        #voltage = round((float)(potentiometer_value) * adc_ref / 1023, 2)
+        #degrees = round((voltage * full_angle) / grove_vcc, 2)
 
         #print("prev Button" + str(prevBtn))
 
@@ -103,8 +103,8 @@ while True:
         #grovepi.analogWrite(led,brightness)
         
         # Fill dict with all readings
-        temp['voltage'] = voltage
-        temp['degrees'] = degrees
+        #temp['voltage'] = voltage
+        #temp['degrees'] = degrees
         temp['illuminance'] = light_sensor_value
         temp['button_value'] = button_sensor_value
         temp['temperature'] = tempr
@@ -120,8 +120,8 @@ while True:
         print(temp)
         url = "https://dweet.io/dweet/for/test_"+thing_id
         if last != temp:
-            dweepy.dweet_for(thing_id,temp)
-            #grequests.post(url, data=temp)
+            #dweepy.dweet_for(thing_id,temp)
+            grequests.post(url, data=temp)
             #print(res)
 
         response = m.insert_into(temp)
@@ -131,17 +131,21 @@ while True:
         last = temp
         time.sleep(1)
 
-    finally:
-        print("hey")
-    #except (IOError, TypeError) as e:
-    #    print(str(e))
-    #    setText("")
-    #    setRGB(0,0,0)
-    #    break
+    except (IOError, TypeError, NameError) as e:
+        print(str(e))
+        setText("")
+        setRGB(0,0,0)
+        break
 
-    #except KeyboardInterrupt:
-    #    setText("")
-    #    setRGB(0,0,0)
-    #    #setText_norefresh(datetime.datetime.now().isoformat())
-    #    #grovepi.analogWrite(led,0)
-    #    break  
+    except Exception as e:
+        print(str(e))
+        setText("")
+        setRGB(0,0,0)
+        break
+
+    except KeyboardInterrupt:
+        setText("")
+        setRGB(0,0,0)
+        #setText_norefresh(datetime.datetime.now().isoformat())
+        #grovepi.analogWrite(led,0)
+        break  
