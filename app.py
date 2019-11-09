@@ -67,20 +67,28 @@ while True:
 
         #print("prev Button" + str(prevBtn))
 
-        if (prevBtn + button_sensor_value) == 2 or menuActive == 1:
-            print("Degree Change: "+str(prevDegrees-degrees))
-            print(prevDegrees)
-            print(degrees)
-            setText_norefresh("")
-            setText_norefresh("Menu\nDegrees: "+str(prevDegrees-degrees))
-            prevDegrees = degrees
-            menuActive = 1
-        else:
-            #Set Time on LCD
-            setText_norefresh(datetime.datetime.now().isoformat())
-            prevBtn += button_sensor_value
-            prevDegrees = degrees
+        #if (prevBtn + button_sensor_value) == 2 or menuActive == 1:
+            
+        #    if menuActive == 0:
+        #        setText_norefresh("")
+        #        setText_norefresh("Menu\nSet Timer")
+        #        prevBtn = 0
+        #    else:
+        #        if prevBtn == 1:
 
+
+            #degreeChange = prevDegrees-degrees
+            #if degreeChange >= -100
+            #    setText_norefresh("")
+            #    setText_norefresh("Menu\nDegrees: "+str(prevDegrees-degrees))
+            #prevDegrees = degrees
+        #    menuActive = 1
+        #else:
+        #    #Set Time on LCD
+        #    prevBtn += button_sensor_value
+        #    prevDegrees = degrees
+
+        setText_norefresh("Date", datetime.datetime.now().strftime('%Y-%m-%d'), "\n Time: ", datetime.datetime.now().strftime('H:%M:%S'))
 
 
 
