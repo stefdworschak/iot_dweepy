@@ -142,6 +142,4 @@ while True:
     #    setRGB(0,0,0)
     #    #setText_norefresh(datetime.datetime.now().isoformat())
     #    #grovepi.analogWrite(led,0)
-    #    break
-    
-
+    #    break  
