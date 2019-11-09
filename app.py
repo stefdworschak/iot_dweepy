@@ -1,7 +1,7 @@
 import time
 import json
 import datetime
-import grequests
+#import grequests
 
 import grovepi
 from grovepi import *
@@ -120,8 +120,8 @@ while True:
         print(temp)
         url = "https://dweet.io/dweet/for/test_"+thing_id
         if last != temp:
-            #dweepy.dweet_for(thing_id,temp)
-            grequests.post(url, data=temp)
+            dweepy.dweet_for(thing_id,temp)
+            #grequests.post(url, data=temp)
             #print(res)
 
         response = m.insert_into(temp)
