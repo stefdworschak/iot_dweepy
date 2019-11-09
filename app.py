@@ -47,6 +47,8 @@ grovepi.pinMode(button_sensor,"INPUT")
 setRGB(0,255,0)
 
 last = {}
+prevBtn = 0
+menuActive = 0
 
 while True:
     try:
@@ -56,9 +58,18 @@ while True:
         potentiometer_value = grovepi.analogRead(potentiometer)
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
+        button_sensor = grovepi.digitalRead(button_sensor)
 
-        #Set Time on LCD
-        setText_norefresh(datetime.datetime.now().isoformat())
+        print("prev Button" + str(prevBtn))
+        if (prevBtn + button_sensor) == 3:
+            setText_norefresh("Menu")
+            prevBtn += button_sensor
+        else:
+            #Set Time on LCD
+            setText_norefresh(datetime.datetime.now().isoformat())
+
+
+
 
         # Retrieve secondary values based on potentiometer
         voltage = round((float)(potentiometer_value) * adc_ref / 1023, 2)
@@ -72,7 +83,7 @@ while True:
         temp['voltage'] = voltage
         temp['degrees'] = degrees
         temp['illuminance'] = light_sensor_value
-        temp['button_value'] = grovepi.digitalRead(button_sensor)
+        temp['button_value'] = button_sensor
         #temp['sound_value'] = sound_sensor_value
         #temp['sound_category'] = 'loud' if sound_sensor_value > sound_threshold else 'silent'
         #temp['brightness'] = brightness
@@ -88,11 +99,12 @@ while True:
 
         response = m.insert_into(temp)
         print(temp)
-        #print(json.dumps(temp))
         
         #if last != temp:
             #dweepy.dweet_for('dwo_iot_BzEsQxDrq0',temp)
         
+
+
         # Set a timeout of one second
         time.sleep(1)
 
