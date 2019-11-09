@@ -61,7 +61,7 @@ while True:
         temp = {}
 
         # Retrieve the potentiometer value
-        potentiometer_value = grovepi.analogRead(potentiometer)
+        #potentiometer_value = grovepi.analogRead(potentiometer)
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
         button_sensor_value = grovepi.digitalRead(button_sensor)
