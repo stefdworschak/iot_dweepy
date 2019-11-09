@@ -122,7 +122,7 @@ while True:
         if last != temp:
             #dweepy.dweet_for(thing_id,temp)
             grequests.post(url, data=temp)
-            print(res)
+            #print(res)
 
         response = m.insert_into(temp)
         print(temp)
@@ -139,6 +139,7 @@ while True:
 
     except KeyboardInterrupt:
         setText("")
+        setRGB(0,0,0)
         #setText_norefresh(datetime.datetime.now().isoformat())
         #grovepi.analogWrite(led,0)
         break
