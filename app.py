@@ -58,13 +58,13 @@ while True:
         potentiometer_value = grovepi.analogRead(potentiometer)
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
-        button_sensor = grovepi.digitalRead(button_sensor)
-        print(button_sensor)
+        button_sensor_value = grovepi.digitalRead(button_sensor)
+        print(button_sensor_value)
 
         print("prev Button" + str(prevBtn))
-        if (prevBtn + button_sensor) == 3:
+        if (prevBtn + button_sensor_value) == 3:
             setText_norefresh("Menu")
-            prevBtn += button_sensor
+            prevBtn += button_sensor_value
         else:
             #Set Time on LCD
             setText_norefresh(datetime.datetime.now().isoformat())
