@@ -45,7 +45,7 @@ full_angle = 300
 
 snooze = 0
 
-def alarm_sound():
+def alarm_sound(threadname):
     if snooze == 0:
         grovepi.analogWrite(led,1)
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
@@ -55,6 +55,7 @@ while True:
     try:
         temp = {}
         thread_id += 1
+        thread_id2 += 2
 
         light_sensor_value = grovepi.analogRead(light_sensor)
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
@@ -78,7 +79,7 @@ while True:
         temp['humidity'] = hum
 
         if light_sensor_value > threshold:
-            thread.start_new_thread(alarm_sound)
+            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id)))
         else:
             setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
 
