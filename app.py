@@ -71,10 +71,10 @@ while True:
         temp['temperature'] = tempr
         temp['humidity'] = hum
 
-        #if light_sensor_value > threshold:
-        #    thread.start_new_thread(alarm_sound)
-        #else:
-        setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
+        if light_sensor_value > threshold:
+            thread.start_new_thread(alarm_sound)
+        else:
+            setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
 
         # Open file with static data and add it to the dataset 
 
@@ -89,17 +89,12 @@ while True:
         # Create a new thread every time 
         # when sending the information to dweet.io
         # in order to avoid delay from synchonous event
-        def send_info(threadname, url):
-            print(url)
-        if last != temp:
-            #dweepy.dweet_for(thing_id,temp)
-            res = grequests.post(url, data=temp)
-            print(grequests.map([res]))
 
-        #try:
-        #thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
-        #except:
-        print("Error: unable to start thread")
+
+        try:
+            thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
+        except:
+            print("Error: unable to start thread")
 
         # Create a new thread everytime the alarm is triggered
         # This is to play a melody
@@ -129,6 +124,13 @@ while True:
         #setText_norefresh(datetime.datetime.now().isoformat())
         #grovepi.analogWrite(led,0)
         break
+
+def send_info(threadname, url):
+    print(url)
+    if last != temp:
+        #dweepy.dweet_for(thing_id,temp)
+        res = grequests.post(url, data=temp)
+        print(grequests.map([res]))
 
 def alarm_sound():
     if snooze == 0:
