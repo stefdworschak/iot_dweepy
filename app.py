@@ -71,9 +71,9 @@ while True:
         temp['temperature'] = tempr
         temp['humidity'] = hum
 
-        if light_sensor_value > threshold:
-            thread.start_new_thread(alarm_sound)
-        else:
+        #if light_sensor_value > threshold:
+        #    thread.start_new_thread(alarm_sound)
+        #else:
             setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
 
         # Open file with static data and add it to the dataset 
