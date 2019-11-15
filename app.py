@@ -38,6 +38,7 @@ prevBtn = 0
 menuActive = 0
 prevDegrees = 0
 thread_id = 0
+thread_id2 = 0
 
 adc_ref = 5
 grove_vcc = 5
