@@ -95,7 +95,7 @@ while True:
         if light_sensor_value > threshold:
             thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,))
         else:
-            setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
+            setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%m:%s')+"    \n")
 
         # Open file with static data and add it to the dataset 
 
