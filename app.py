@@ -50,7 +50,8 @@ def alarm_sound(threadname):
     if snooze == 0:
         grovepi.analogWrite(led,1)
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
-
+    else:
+        print(snooze)
 
 while True:
     try:
