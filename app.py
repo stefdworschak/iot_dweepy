@@ -131,7 +131,7 @@ while True:
 
         # Set a timeout of one second
         last = temp
-        time.sleep(0.5)
+        time.sleep(1)
 
     except (IOError, TypeError, NameError) as e:
         print(str(e))
