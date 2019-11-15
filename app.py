@@ -82,7 +82,7 @@ while True:
             thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,))
         else:
             setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
-            + "\n" + "Ill: " + str(light_sensor_value) + " / Alarm:" + str(threshold))        
+            + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))        
 
         # Fill dict with all readings
         temp['time'] = datetime.datetime.now()
