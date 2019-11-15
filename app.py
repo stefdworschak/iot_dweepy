@@ -40,14 +40,19 @@ prevDegrees = 0
 thread_id = 0
 thread_id2 = 0
 
+# Variables necessary to calculate degrees
 adc_ref = 5
 grove_vcc = 5
 full_angle = 300
 
+# Variables to check whether alarm is snoozed and for how long 
+# In order to enable it after a certain time
 snooze = 0
 snooze_count = 0
 
-    #def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
+# Function that checks if the alarm should sound or not
+# And check if it is snoozing, increment the snooze counter 
+# And reset the snooze variables
 def alarm_sound(threadname):
     global snooze
     global button_sensor_value
@@ -77,9 +82,15 @@ def alarm_sound(threadname):
         
     return button_sensor_value
 
-    #else:
-    #    setText_norefresh("No Alarm!!")
-    #    print(snooze)
+# function to send
+def send_info(threadname, url):
+    print(url)
+    global last
+    global temp
+    if last != temp:
+        #dweepy.dweet_for(thing_id,temp)
+        res = grequests.post(url, data=temp)
+        print(grequests.map([res]))
 
 while True:
     try:
@@ -98,7 +109,6 @@ while True:
         threshold = degrees * 2
 
         if light_sensor_value > threshold:
-            #thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,snooze, snooze_count,))
             thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),))
         else:
             grovepi.digitalWrite(led,0)
@@ -114,56 +124,54 @@ while True:
         temp['threshold'] = threshold
 
         # Open file with static data and add it to the dataset 
-
         with open('data.json') as file:
             json_data = json.loads(file.read())
             thing_id = json_data['thing_id']
             temp['thing_id'] = thing_id
             temp['location'] = json_data['location']
 
+        # Create dweet.io URL
         url = "https://dweet.io/dweet/for/test_"+thing_id
-        
         
         # Create a new thread every time 
         # when sending the information to dweet.io
         # in order to avoid delay from synchonous event
-        def send_info(threadname, url):
-            print(url)
-            if last != temp:
-                #dweepy.dweet_for(thing_id,temp)
-                res = grequests.post(url, data=temp)
-                print(grequests.map([res]))
-
+        # def send_info(threadname, url):
+        #     print(url)
+        #     if last != temp:
+        #         #dweepy.dweet_for(thing_id,temp)
+        #         res = grequests.post(url, data=temp)
+        #         print(grequests.map([res]))
         try:
             thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
         except:
             print("Error: unable to start thread")
 
-        # Create a new thread everytime the alarm is triggered
-        # This is to play a melody
-
-
+        # Class function to save data to database
         response = m.insert_into(temp)
 
-        # Set a timeout of one second
+        # Set a timeout of 0.6 
+        # It seems that 1s is too long because of the code that has already been running
         last = temp
         time.sleep(0.6)
 
+    # Check for errors
     except (IOError, TypeError, NameError) as e:
         print(str(e))
         setText("")
         setRGB(0,0,0)
+        grovepi.digitalWrite(led,0)
         break
 
     except Exception as e:
         print(str(e))
         setText("")
         setRGB(0,0,0)
+        grovepi.digitalWrite(led,0)
         break
 
     except KeyboardInterrupt:
         setText("")
         setRGB(0,0,0)
-        #setText_norefresh(datetime.datetime.now().isoformat())
-        #grovepi.analogWrite(led,0)
+        grovepi.digitalWrite(led,0)
         break
