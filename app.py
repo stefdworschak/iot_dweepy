@@ -45,14 +45,20 @@ grove_vcc = 5
 full_angle = 300
 
 snooze = 0
+snooze_count = 0
 
 def alarm_sound(threadname):
     if snooze == 0:
         grovepi.analogWrite(led,1)
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
-    else:
-        setText_norefresh("No Alarm!!")
-        print(snooze)
+        button_sensor_value = grovepi.digitalRead(button_sensor)
+        snooze = 1 if button_sensor_value == 1 else 0
+    elif snooze == 1 and snooze_count < 10:
+        snooze = 0
+        snooze_count = 0
+    #else:
+    #    setText_norefresh("No Alarm!!")
+    #    print(snooze)
 
 while True:
     try:
@@ -64,9 +70,8 @@ while True:
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
         sensor_value = grovepi.analogRead(potentiometer)
 
-        button_sensor_value = grovepi.digitalRead(button_sensor)
         print("ButtonValue: " + str(button_sensor_value))
-        snooze = 1 if button_sensor_value == 1 and snooze == 0 else 0
+        #snooze = 1 if button_sensor_value == 1 and snooze == 0 else 0
 
         # Calculate voltage and degrees
         voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
