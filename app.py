@@ -48,6 +48,8 @@ snooze = 0
 snooze_count = 0
 
 def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
+    print("Snooze: " + str(snooze))
+    print("Button: " + str(button_sensor_value))
     if snooze == 0:
         grovepi.analogWrite(led,1)
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
