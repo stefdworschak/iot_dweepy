@@ -63,10 +63,16 @@ def alarm_sound(threadname):
         snooze = 1 if button_sensor_value == 1 else 0
     elif snooze == 1 and snooze_count > 10:
         print("snooze")
+        grovepi.digitalWrite(led,0)
+        setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
+            + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))  
         snooze = 0
         snooze_count = 0
     else: 
         print("inc snooze count")
+        grovepi.digitalWrite(led,0)
+        setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
+            + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))  
         snooze_count += 1 
         
     return button_sensor_value
