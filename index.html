@@ -2,20 +2,126 @@
 <html>
     <head>
         <title>Dweet.io</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">       
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/styles.css">
+        <!-- Bootstrap files -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.core.js"></script>
+        <!-- Apex Charts 
+        <script src="apexcharts/apexcharts.js"></script>
+        <link rel="stylesheet" href="apexcharts/apexcharts.css">-->
+
+        <!-- AmCharts ...don't offer any real-time charts -->
+          <script src="amcharts/core.js"></script>
+          <script src="amcharts/charts.js"></script>
+
+          <script src="charts.js"></script>
+          <script src="dummy.js"></script>
+          <script src="script.js"></script>
+      
+       <!-- <script src="new_app.js"></script> -->
     </head>
     <body>
 
-        <div class="card">
-            <div class="card-header">
-              Message from <span id="date_out"></span>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="file:///C:/Users/stefd/OneDrive/Documents/NCIRL/IOT%20Dweepy/index.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
             </div>
-            <div class="card-body" id="message_out">
-            </div>
+        </nav>
+
+        
+        <div class="container-fluid">
+          <div class="row">
+
+              <div class="col-4 canvas-container">
+                  <div class="bg-success paper celcius">
+                      <div class="callout">
+                          0&#xb0; / 0%
+                      </div>
+                      <div class="callout-header">
+                          TEMP / HUMIDITY
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-4 canvas-container">
+                  <div class="bg-warning paper lux">
+                      <div class="callout">
+                          0lx
+                      </div>
+                      <div class="callout-header">ILLUMINANCE</div>
+                  </div>
+              </div>
+          
+              <div class="col-4 canvas-container">
+                  <div class="bg-danger paper threshold">
+                      <div class="callout">
+                          0lx
+                      </div>
+                      <div class="callout-header">THRESHOLD</div>
+                  </div>
+              </div>
+
+              <!--<div class="col-3 canvas-container">
+                  <div class="bg-info paper lux">
+                      <div class="callout">
+                          0lx
+                      </div>
+                      <div class="callout-header">LUX ILLUMINANCE</div>
+                  </div>
+              </div>-->
+
           </div>
 
-        <script src="dweet.io.js"></script>
-        <script src="app.js"></script>
-    </body>
+          <!-- Second row with charts -->
 
+          <div class="row">
+
+              <div class="col-4 canvas-container">
+                  <div class="paper">
+                      <!--<div class="chart_title" id="temperature_container">&nbsp;</div>-->
+                      <div id="temperature_container">
+                          <!--<div class="loader"></div>-->
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="col-4 canvas-container">
+                  <div class="paper">
+                      <!--<div class="chart_title" id="component_split_header">&nbsp;</div>-->
+                      <div id="illuminance_container">
+                          <!--<div class="loader"></div>-->
+                      </div>
+                  </div>
+              </div>
+                  
+              <div class="col-4 canvas-container">
+                  <div class="paper">
+                      <!--<div class="chart_title" id="top_courses_header">&nbsp;</div>-->
+                      <div id="threshold_container">
+                          <!--<div class="loader"></div>-->
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+        </div>
+
+
+
+    </body>
 </html>

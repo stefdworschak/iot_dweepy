@@ -1,7 +1,7 @@
 import pymongo
 import json
 
-def insert_into(record):
+def insert_into(record): 
     myclient = pymongo.MongoClient('mongodb://localhost:27017/')
     db = myclient['iot_dweepy']
     col = db['records']

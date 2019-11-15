@@ -3,5 +3,10 @@
     "location":{
         "latitude":53.348892,
         "longitude":-6.243029
-    }
+    },
+    "illuminance":500,
+    "temperature":32,
+    "humidity": 20,
+    "button": 0,
+    "sound": 100
 }
