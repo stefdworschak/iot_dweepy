@@ -70,6 +70,10 @@ while True:
 
         #def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
         def alarm_sound(threadname):
+            global snooze
+            global button_sensor_value
+            global led
+            global snooze_count
             print("Snooze: " + str(snooze))
             print("Button: " + str(button_sensor_value))
             if snooze == 0:
