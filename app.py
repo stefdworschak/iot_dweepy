@@ -73,21 +73,15 @@ while True:
         sensor_value = grovepi.analogRead(potentiometer)
         button_sensor_value = grovepi.digitalRead(button_sensor)
 
-        if light_sensor_value > threshold:
-            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,))
-        else:
-            setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
-
-        #print("ButtonValue: " + str(button_sensor_value))
-        #snooze = 1 if button_sensor_value == 1 and snooze == 0 else 0
-
         # Calculate voltage and degrees
         voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
         degrees = round((voltage * full_angle) / grove_vcc, 2)
         threshold = degrees * 2
 
-        # Give PWM output to LED
-        #grovepi.analogWrite(led,1)
+        if light_sensor_value > threshold:
+            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,))
+        else:
+            setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")        
 
         # Fill dict with all readings
         temp['time'] = datetime.datetime.now()
