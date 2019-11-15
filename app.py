@@ -45,6 +45,12 @@ full_angle = 300
 
 snooze = 0
 
+def alarm_sound():
+    if snooze == 0:
+        grovepi.analogWrite(led,1)
+        setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
+
+
 while True:
     try:
         temp = {}
@@ -129,8 +135,3 @@ while True:
         #setText_norefresh(datetime.datetime.now().isoformat())
         #grovepi.analogWrite(led,0)
         break
-
-def alarm_sound():
-    if snooze == 0:
-        grovepi.analogWrite(led,1)
-        setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
