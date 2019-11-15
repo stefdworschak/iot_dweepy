@@ -105,7 +105,7 @@ while True:
         # This is to play a melody
 
 
-        response = m.insert_into(temp)
+        #response = m.insert_into(temp)
 
         # Set a timeout of one second
         last = temp
