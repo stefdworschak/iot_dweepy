@@ -77,7 +77,7 @@ while True:
             print("Snooze: " + str(snooze))
             print("Button: " + str(button_sensor_value))
             if snooze == 0:
-                grovepi.analogWrite(led,1)
+                grovepi.digitalWrite(led,1)
                 setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
                 snooze = 1 if button_sensor_value == 1 else 0
             elif snooze == 1 and snooze_count < 10:
