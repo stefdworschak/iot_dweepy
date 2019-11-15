@@ -65,7 +65,8 @@ while True:
         sensor_value = grovepi.analogRead(potentiometer)
 
         button_sensor_value = grovepi.digitalRead(button_sensor)
-        snooze = 1 if button_sensor_value == 1 and snooze == 0 else 1
+        print("ButtonValue: " + button_sensor_value)
+        snooze = 1 if button_sensor_value == 1 and snooze == 0 else 0
 
         # Calculate voltage and degrees
         voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
