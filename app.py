@@ -73,7 +73,12 @@ while True:
         sensor_value = grovepi.analogRead(potentiometer)
         button_sensor_value = grovepi.digitalRead(button_sensor)
 
-        print("ButtonValue: " + str(button_sensor_value))
+        if light_sensor_value > threshold:
+            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,))
+        else:
+            setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
+
+        #print("ButtonValue: " + str(button_sensor_value))
         #snooze = 1 if button_sensor_value == 1 and snooze == 0 else 0
 
         # Calculate voltage and degrees
@@ -91,11 +96,6 @@ while True:
         temp['temperature'] = tempr
         temp['humidity'] = hum
         temp['threshold'] = threshold
-
-        if light_sensor_value > threshold:
-            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,))
-        else:
-            setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
 
         # Open file with static data and add it to the dataset 
 
