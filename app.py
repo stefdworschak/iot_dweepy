@@ -136,12 +136,6 @@ while True:
         # Create a new thread every time 
         # when sending the information to dweet.io
         # in order to avoid delay from synchonous event
-        # def send_info(threadname, url):
-        #     print(url)
-        #     if last != temp:
-        #         #dweepy.dweet_for(thing_id,temp)
-        #         res = grequests.post(url, data=temp)
-        #         print(grequests.map([res]))
         try:
             thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
         except:
