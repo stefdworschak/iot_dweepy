@@ -96,9 +96,9 @@ while True:
             res = grequests.post(url, data=temp)
             print(grequests.map([res]))
 
-        try:
-            thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
-        except:
+        #try:
+        thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
+        #except:
             print("Error: unable to start thread")
 
         # Create a new thread everytime the alarm is triggered
