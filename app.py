@@ -80,7 +80,7 @@ while True:
         temp['humidity'] = hum
 
         if light_sensor_value > threshold:
-            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id)))
+            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),))
         else:
             setText_norefresh("Date: " + datetime.datetime.now().strftime('%Y-%m-%d') + "\n Time: " + datetime.datetime.now().strftime('%H:%M:%S')+"    \n")
 
