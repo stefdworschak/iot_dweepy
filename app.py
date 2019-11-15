@@ -97,7 +97,7 @@ while True:
             print(grequests.map([res]))
 
         #try:
-        thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
+        #thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
         #except:
         print("Error: unable to start thread")
 
