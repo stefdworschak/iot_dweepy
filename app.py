@@ -55,14 +55,19 @@ def alarm_sound(threadname):
     global snooze_count
     print("Snooze: " + str(snooze))
     print("Button: " + str(button_sensor_value))
-    print("Button: " + str(snooze_count))
+    print("Snooze Count: " + str(snooze_count))
     if snooze == 0:
+        print("no snooze")
         grovepi.digitalWrite(led,1)
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
         snooze = 1 if button_sensor_value == 1 else 0
     elif snooze == 1 and snooze_count < 10:
+        print("snooze")
         snooze = 0
         snooze_count = 0
+    else: 
+        print("inc snooze count")
+        snooze_count += 1 
         
     return button_sensor_value
 
@@ -90,6 +95,7 @@ while True:
             #thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,snooze, snooze_count,))
             thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),))
         else:
+            grovepi.digitalWrite(led,0)
             setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
             + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))        
 
