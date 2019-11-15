@@ -69,7 +69,7 @@ while True:
         threshold = degrees * 2
 
         #def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
-        def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
+        def alarm_sound(threadname):
             print("Snooze: " + str(snooze))
             print("Button: " + str(button_sensor_value))
             if snooze == 0:
