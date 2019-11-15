@@ -47,6 +47,24 @@ full_angle = 300
 snooze = 0
 snooze_count = 0
 
+    #def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
+    def alarm_sound(threadname):
+        global snooze
+        global button_sensor_value
+        global led
+        global snooze_count
+        print("Snooze: " + str(snooze))
+        print("Button: " + str(button_sensor_value))
+        print("Button: " + str(snooze_count))
+        if snooze == 0:
+            grovepi.digitalWrite(led,1)
+            setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
+            snooze = 1 if button_sensor_value == 1 else 0
+        elif snooze == 1 and snooze_count < 10:
+            snooze = 0
+            snooze_count = 0
+            
+        return button_sensor_value
 
     #else:
     #    setText_norefresh("No Alarm!!")
@@ -67,24 +85,6 @@ while True:
         voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
         degrees = round((voltage * full_angle) / grove_vcc, 2)
         threshold = degrees * 2
-
-        #def alarm_sound(threadname, button_sensor_value, snooze, snooze_count):
-        def alarm_sound(threadname):
-            global snooze
-            global button_sensor_value
-            global led
-            global snooze_count
-            print("Snooze: " + str(snooze))
-            print("Button: " + str(button_sensor_value))
-            if snooze == 0:
-                grovepi.digitalWrite(led,1)
-                setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
-                snooze = 1 if button_sensor_value == 1 else 0
-            elif snooze == 1 and snooze_count < 10:
-                snooze = 0
-                snooze_count = 0
-            
-            return button_sensor_value
 
         if light_sensor_value > threshold:
             #thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),button_sensor_value,snooze, snooze_count,))
