@@ -109,7 +109,10 @@ while True:
         # Calculate voltage and degrees
         voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
         degrees = round((voltage * full_angle) / grove_vcc, 2)
-        threshold = degrees * 2
+
+        # Max degrees on the rotary angle sensor is 300
+        # Illuminance goes up to around 700-800 so it will need to be above that
+        threshold = degrees * 3
         print(threshold)
 
         if light_sensor_value > threshold:
