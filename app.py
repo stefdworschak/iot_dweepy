@@ -79,7 +79,8 @@ def alarm_sound(threadname):
         setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
             + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))  
         snooze_count += 1 
-        
+    
+    thread.exit()
     return button_sensor_value
 
 # function to send
@@ -91,6 +92,7 @@ def send_info(threadname, url):
         #dweepy.dweet_for(thing_id,temp)
         res = grequests.post(url, data=temp)
         print(grequests.map([res]))
+    thread.exit()
 
 while True:
     try:
@@ -102,14 +104,19 @@ while True:
         [ tempr,hum ] = dht(dht_sensor_port,dht_sensor_type)
         sensor_value = grovepi.analogRead(potentiometer)
         button_sensor_value = grovepi.digitalRead(button_sensor)
+        print(light_sensor_value)
 
         # Calculate voltage and degrees
         voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
         degrees = round((voltage * full_angle) / grove_vcc, 2)
         threshold = degrees * 2
+        print(threshold)
 
         if light_sensor_value > threshold:
-            thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),))
+            try:
+                thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),))
+            except:
+                print("Error starting thread for alarm sound. ")
         else:
             grovepi.digitalWrite(led,0)
             setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
