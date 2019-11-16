@@ -61,6 +61,7 @@ def alarm_sound():
     global button_sensor_value
     global led
     global snooze_count
+    global buzzer
     if snooze == 0:
         print("no snooze")
         grovepi.digitalWrite(led,1)
