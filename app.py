@@ -127,6 +127,7 @@ while True:
             #    print("Error starting thread for alarm sound. ")
         else:
             grovepi.digitalWrite(led,0)
+            grovepi.digitalWrite(buzzer,0)
             setText_norefresh(datetime.datetime.now().strftime('%d%b%y') + " " + datetime.datetime.now().strftime('%H:%M:%S')
             + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))        
 
