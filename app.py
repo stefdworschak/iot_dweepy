@@ -52,6 +52,8 @@ full_angle = 300
 snooze = 0
 snooze_count = 0
 
+alarm_count = 0
+
 # Function that checks if the alarm should sound or not
 # And check if it is snoozing, increment the snooze counter 
 # And reset the snooze variables
@@ -62,16 +64,21 @@ def alarm_sound():
     global led
     global snooze_count
     global buzzer
+    global alarm_count
     if snooze == 0:
         print("no snooze")
         grovepi.digitalWrite(led,1)
         try:
-            grovepi.digitalWrite(buzzer,1)
+            if alarm_count % 2 == 0:
+                grovepi.digitalWrite(buzzer,1)
+            else:
+                grovepi.digitalWrite(buzzer,0)
         except Exception as e:
             print(str(e))
             grovepi.digitalWrite(buzzer,0)         
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
         snooze = 1 if button_sensor_value == 1 else 0
+        alarm_count = 0 if button_sensor_value == 1 else alarm_count + 1
     elif snooze == 1 and snooze_count > 20:
         print("snooze")
         grovepi.digitalWrite(led,0)
