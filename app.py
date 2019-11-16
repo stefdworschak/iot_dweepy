@@ -61,13 +61,14 @@ def alarm_sound():
     global button_sensor_value
     global led
     global snooze_count
-    print("Snooze: " + str(snooze))
-    print("Button: " + str(button_sensor_value))
-    print("Snooze Count: " + str(snooze_count))
     if snooze == 0:
         print("no snooze")
         grovepi.digitalWrite(led,1)
-        grovepi.digitalWrite(buzzer,1)
+        try:
+            grovepi.digitalWrite(buzzer,1)
+        except Exception as e:
+            print(str(e))
+            grovepi.digitalWrite(buzzer,1)         
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
         snooze = 1 if button_sensor_value == 1 else 0
     elif snooze == 1 and snooze_count > 20:
