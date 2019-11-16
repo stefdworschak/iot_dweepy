@@ -69,7 +69,7 @@ def alarm_sound():
             grovepi.digitalWrite(buzzer,1)
         except Exception as e:
             print(str(e))
-            grovepi.digitalWrite(buzzer,1)         
+            grovepi.digitalWrite(buzzer,0)         
         setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
         snooze = 1 if button_sensor_value == 1 else 0
     elif snooze == 1 and snooze_count > 20:
@@ -88,7 +88,7 @@ def alarm_sound():
             + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))  
         snooze_count += 1 
     
-    thread.exit()
+    #thread.exit()
     return button_sensor_value
 
 # function to send
