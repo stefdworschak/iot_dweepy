@@ -15,11 +15,11 @@ $(document).ready(function(){
         $($('.threshold').children()[0]).html(arr[arr.length-1].threshold + "lx");
 
         temperature = arr.slice(0).map(function(a){
-            return {ts:new Date(a.time), temperature: a.temperature, humidity: a.humidity};
+            return {ts:new Date(a.time).getTime(), temperature: a.temperature, humidity: a.humidity};
         });
 
         lux = arr.slice(0).map(function(a){
-            return {ts:new Date(a.time), illuminance: a.illuminance};
+            return {ts:new Date(a.time).getTime(), illuminance: a.illuminance};
         });
 
         chart1 = createMultiTimelineChart(temperature, "ts", ["temperature","humidity"], "temperature_container",["Temperature","Humidity"]);
@@ -39,11 +39,11 @@ $(document).ready(function(){
             $($('.threshold').children()[0]).html(arr2[arr2.length-1].threshold + "lx");
                 
             temperature2 = arr2.slice(0).map(function(a){
-                    return {ts:new Date(a.time), temperature: a.temperature, humidity: a.humidity};
+                    return {ts:new Date(a.time).getTime(), temperature: a.temperature, humidity: a.humidity};
             });
             
             lux2 = arr2.slice(0).map(function(a){
-                return {ts:new Date(a.time), illuminance: a.illuminance};
+                return {ts:new Date(a.time).getTime(), illuminance: a.illuminance};
             });
             /*const temp_update = temperature2.filter(function(item1){
                     !temperature.some(function(item2){
@@ -57,10 +57,10 @@ $(document).ready(function(){
                 })
             });*/
             console.log("Checking ts")
-            console.log(temperature[0].ts)
-            console.log(temperature2[0].ts)
-            console.log(new Date(temperature[0].ts).getTime() == new Date(temperature2[0].ts).getTime());
-            console.log(temperature[temperature.length-1].ts == temperature2[temperature.length-1].ts);
+            //console.log(temperature[0].ts)
+            //console.log(temperature2[0].ts)
+            //console.log(new Date(temperature[0].ts).getTime() == new Date(temperature2[0].ts).getTime());
+            //console.log(temperature[temperature.length-1].ts == temperature2[temperature.length-1].ts);
             const temp_update = temperature2.filter(item1 => 
                 !temperature.some(item2 => (new Date(item2.ts).getTime() === new Date(item1.ts).getTime() && item2.temperature === item1.temperature && item2.humidity === item1.humidity)));
             console.log(temp_update)
@@ -74,10 +74,10 @@ $(document).ready(function(){
             } else {
                 for(i = 0; i < temp_update.length; i++){
                     chart1.addData(
-                        { ts: new Date(temp_update[i].ts), temperature: temp_update[i].temperature, humidity: temp_update[i].humidity },
+                        { ts: new Date(temp_update[i].ts).getTime(), temperature: temp_update[i].temperature, humidity: temp_update[i].humidity },
                     );
                     chart2.addData(
-                        { ts: new Date(lux_update[i].ts), illuminance: lux_update[i].illuminance },
+                        { ts: new Date(lux_update[i].ts).getTime(), illuminance: lux_update[i].illuminance },
                     );
                 }
             }
