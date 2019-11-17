@@ -81,7 +81,7 @@ def alarm_sound():
             grovepi.digitalWrite(buzzer,0)         
         setText_norefresh("Alarm! Alarm!   \nGet up now!        \n")
         snooze = 1 if button_sensor_value == 1 else 0
-       # alarm_count = 0 if button_sensor_value == 1 else alarm_count + 1
+       alarm_count = 0 if button_sensor_value == 1 else alarm_count + 1
     elif snooze == 1 and snooze_count > 20:
         print("snooze")
         grovepi.digitalWrite(led,0)
