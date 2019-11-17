@@ -108,7 +108,7 @@ def send_info(threadname, url):
     global arr
 
     #df = pandas.DataFrame(arr)
-    print(df.head())
+    #print(df.head())
     if last != temp:
         #dweepy.dweet_for(thing_id,temp)
         res = grequests.post(url, data=temp)
