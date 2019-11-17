@@ -1,30 +1,31 @@
 $(document).ready(function(){
-    let chart1, chart2, gaugeHand;
+    let chart1, chart2, gaugeHand, gaugeLabel;
     let arr = [];
     let temperature = [];
     let lux = [];
     let arr2, temperature2, lux2;
     
     arr = JSON.parse(localStorage.getItem("arr")) == null ? [] : JSON.parse(localStorage.getItem("arr"));
-
     if(arr.length != 0) {
 
         //Set all of the top items
         $($('.celcius').children()[0]).html(arr[arr.length-1].temperature + "&#xb0; / " + arr[arr.length-1].humidity + "%");
         $($('.lux').children()[0]).html(arr[arr.length-1].illuminance + "lx");
         $($('.threshold').children()[0]).html(arr[arr.length-1].threshold + "lx");
-
+        console.log(Math.floor(new Date(arr[arr.length-1].time).getTime() / 1000))
         temperature = arr.slice(0).map(function(a){
-            return {ts:new Date(a.time).getTime(), temperature: a.temperature, humidity: a.humidity};
+            return {ts:a.time, temperature: a.temperature, humidity: a.humidity};
         });
 
         lux = arr.slice(0).map(function(a){
-            return {ts:new Date(a.time).getTime(), illuminance: a.illuminance};
+            return {ts:a.time, illuminance: a.illuminance};
         });
 
         chart1 = createMultiTimelineChart(temperature, "ts", ["temperature","humidity"], "temperature_container",["Temperature","Humidity"]);
-        chart2 = createBulletChart(lux, "ts", "illuminance", "illuminance_container","Illuminance");
-        gaugeHand = createGaugeChart(arr[arr.length-1].threshold, "threshold_container", "Threshold");
+        chart2 = createBarChart(lux, "ts", "illuminance", "illuminance_container","Illuminance");
+        chart3 = createGaugeChart(arr[arr.length-1].threshold, "threshold_container", "Threshold");
+        gaugeHand = chart3[0];
+        gaugeLabel = chart3[1];
         
     } else {
         updateChart();
@@ -32,41 +33,31 @@ $(document).ready(function(){
     
     function updateChart(){
         try {
-            arr2 = JSON.parse(localStorage.getItem("arr"))
+            console.log("Updating Chart");
+            arr_original = JSON.parse(localStorage.getItem("arr"));
+            arr2 = arr_original.slice(0).splice(arr.length);
             //Set all of the top items
             $($('.celcius').children()[0]).html(arr2[arr2.length-1].temperature + "&#xb0; / " + arr2[arr2.length-1].humidity + "%");
             $($('.lux').children()[0]).html(arr2[arr2.length-1].illuminance + "lx");
             $($('.threshold').children()[0]).html(arr2[arr2.length-1].threshold + "lx");
                 
             temperature2 = arr2.slice(0).map(function(a){
-                    return {ts:new Date(a.time).getTime(), temperature: a.temperature, humidity: a.humidity};
-            });
-            
-            lux2 = arr2.slice(0).map(function(a){
-                return {ts:new Date(a.time).getTime(), illuminance: a.illuminance};
-            });
-            /*const temp_update = temperature2.filter(function(item1){
-                    !temperature.some(function(item2){
-                        return (new Date(item2.ts) === new Date(item1.ts))
-                    })
+                    return {ts:a.time, temperature: a.temperature, humidity: a.humidity};
             });
 
-            const lux_update = lux2.filter(function(item1){
-                !lux.some(function(item2){
-                    return (new Date(item2.ts) === new Date(item1.ts))
-                })
-            });*/
-            console.log("Checking ts")
-            //console.log(temperature[0].ts)
-            //console.log(temperature2[0].ts)
-            //console.log(new Date(temperature[0].ts).getTime() == new Date(temperature2[0].ts).getTime());
-            //console.log(temperature[temperature.length-1].ts == temperature2[temperature.length-1].ts);
-            const temp_update = temperature2.filter(item1 => 
-                !temperature.some(item2 => (new Date(item2.ts).getTime() === new Date(item1.ts).getTime() && item2.temperature === item1.temperature && item2.humidity === item1.humidity)));
-            console.log(temp_update)
-            const lux_update = lux2.filter(item1 => 
-                !lux.some(item2 => (new Date(item2.ts).getTime() === new Date(item1.ts).getTime() && item2.illuminance === item1.illuminance)));
-            console.log(lux_update)
+            //console.log(temperature);
+            console.log(temperature2);
+            lux2 = arr2.slice(0).map(function(a){
+                return {ts:a.time, illuminance: a.illuminance};
+            });
+            let temp_update = temperature2.slice(0).filter(item1 => 
+                !temperature.some(item2 => (item2.ts == item1.ts && item2.temperature === item1.temperature && item2.humidity === item1.humidity)));
+            
+                console.log(temp_update)
+            let lux_update = lux2.slice(0).filter(item1 => 
+                !lux.some(item2 => (item2.ts == item1.ts && item2.illuminance === item1.illuminance)));
+            
+                console.log(lux_update)
             if(chart1 == null){
                 chart1 = createMultiTimelineChart(temperature, "ts", ["temperature","humidity"], "temperature_container",["Temperature","Humidity"]);
                 chart2 = createBulletChart(lux, "ts", "illuminance", "illuminance_container","Illuminance");
@@ -74,24 +65,28 @@ $(document).ready(function(){
             } else {
                 for(i = 0; i < temp_update.length; i++){
                     chart1.addData(
-                        { ts: new Date(temp_update[i].ts).getTime(), temperature: temp_update[i].temperature, humidity: temp_update[i].humidity },
+                        { ts: temp_update[i].ts, temperature: temp_update[i].temperature, humidity: temp_update[i].humidity },
                     );
                     chart2.addData(
-                        { ts: new Date(lux_update[i].ts).getTime(), illuminance: lux_update[i].illuminance },
+                        { ts: lux_update[i].ts, illuminance: lux_update[i].illuminance },
                     );
                 }
+               // chart1.data = temperat;
             }
 
             var animation = new am4core.Animation(gaugeHand, {
                 property: "value",
-                to: Math.round(Math.random() * 100, 0)
+                to: Math.round((Number(arr2[arr2.length-1].threshold) / 900.0) * 100, 0)
             }, 2000, am4core.ease.cubicOut).start();
+            //console.log(gaugeLabel)
+            gaugeLabel.text = (Math.round((Number(arr2[arr2.length-1].threshold) / 900.0) * 100,0)).toString() + "%";
 
         } catch(e){
             console.log(e);
         }
-            
-        setTimeout(updateChart,10000);  
+        
+        arr = arr_original;
+        setTimeout(updateChart,2000);  
     }
 
     function removeDupes(e){

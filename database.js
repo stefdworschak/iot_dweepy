@@ -1,7 +1,7 @@
 function createDummy(){
     // Function to create dummy data and store it in localStorage
     // Reset Localstorage if neccessary
-    // localStorage.removeItem("arr");
+    //localStorage.removeItem("arr");
     let arr = JSON.parse(localStorage.getItem("arr")) == null ? [] : JSON.parse(localStorage.getItem("arr"));
     if(arr.length >= 100){
         arr.unshift();
@@ -37,7 +37,8 @@ function createSample(){
 
     dweetio.listen_for("test_dwo_iot_BzEsQxDrq0",function(dweet){
         try {  
-            console.log(dweet);
+            console.log("Saving Sample")
+            console.log(dweet.content);
             let arr = JSON.parse(localStorage.getItem("arr")) == null ? [] : JSON.parse(localStorage.getItem("arr"));
             if(arr.length >= 100){
                 arr.unshift();
@@ -45,8 +46,6 @@ function createSample(){
             const opt = {hour:"2-digit", minute: "2-digit", second: "2-digit"}
             arr.push(dweet.content)
             localStorage.setItem("arr", JSON.stringify(arr));
-            console.log(arr.length) 
-            //setTimeout(createDummy,1000);
             
         } catch(e){
             console.log(e)

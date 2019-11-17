@@ -8,6 +8,7 @@ import grovepi
 from grovepi import *
 from grove_rgb_lcd import *
 import dweepy
+import pandas
 
 import mongo_db as m
 
@@ -35,6 +36,7 @@ grovepi.pinMode(buzzer,"OUTPUT")
 # LCD is on port I2C-1
 setRGB(0,255,0)
 
+arr = []
 last = {}
 prevBtn = 0
 menuActive = 0
@@ -76,7 +78,7 @@ def alarm_sound():
         except Exception as e:
             print(str(e))
             grovepi.digitalWrite(buzzer,0)         
-        setText_norefresh("Alarm! Alarm!   \nGet up tha fuck!    \n")
+        setText_norefresh("Alarm! Alarm!   \nGet up now!        \n")
         snooze = 1 if button_sensor_value == 1 else 0
         alarm_count = 0 if button_sensor_value == 1 else alarm_count + 1
     elif snooze == 1 and snooze_count > 20:
@@ -103,10 +105,14 @@ def send_info(threadname, url):
     print(url)
     global last
     global temp
-    if last != temp:
+    global arr
+
+    df = pandas.DataFrame(arr)
+    print(df.head())
+    #if last != temp:
         #dweepy.dweet_for(thing_id,temp)
-        res = grequests.post(url, data=temp)
-        print(grequests.map([res]))
+        #res = grequests.post(url, data=temp)
+        #print(grequests.map([res]))
     thread.exit()
 
 while True:
@@ -156,15 +162,18 @@ while True:
             temp['thing_id'] = thing_id
             temp['location'] = json_data['location']
             file.close()
-
-        # Create dweet.io URL
-        url = "https://dweet.io/dweet/for/test_"+thing_id
         
+        arr.append(temp)
         # Create a new thread every time 
         # when sending the information to dweet.io
         # in order to avoid delay from synchonous event
-        try:
-            thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
+        try:   
+            # Check if the temporary array has for more than 30 seconds
+            seconds = (datetime.datetime(arr[0].ts) - datetime.datetime(arr[0].ts)).total_seconds()
+            if seconds > 30:
+            # Create dweet.io URL
+                url = "https://dweet.io/dweet/for/test_"+thing_id
+                thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
         except:
             print("Error: unable to start thread")
 

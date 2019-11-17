@@ -2,11 +2,12 @@ function createMultiTimelineChart(data, category, values, container, series_name
     console.log("LineChart")
     console.log(data)
 
+    am4core.useTheme(am4themes_animated);
     var chart = am4core.create(container, am4charts.XYChart);
     chart.data = data;
     chart.zoomOutButton.disabled = true;
 
-    chart.dateFormatter.inputDateFormat = "yyyy-MM-d hh:mm:ss";
+    chart.dateFormatter.inputDateFormat = "YYYY-mm-dd H:mm:ss";
     // Enable cursor
     //chart.cursor = new am4charts.XYCursor();
     // Enable horizontal scrollbar
@@ -19,10 +20,18 @@ function createMultiTimelineChart(data, category, values, container, series_name
         "timeUnit": "second",
         "count": 1
     } 
-    dateAxis.dateFormats.setKey("second", "h:mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("second", "h:mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("minute", "h:mm a");
-    dateAxis.periodChangeDateFormats.setKey("hour", "h:mm a");  
+    dateAxis.dateFormats.setKey("second", "mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("second", "mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("minute", "mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("hour", "H:mm:ss");  
+    dateAxis.periodChangeDateFormats.setKey("day", "d/m/y H:mm:ss");
+    /*
+    dateAxis.groupData = true;
+    dateAxis.groupCount = 1;
+    dateAxis.groupIntervals.setAll([
+        { timeUnit: "second", count: 1 },
+        { timeUnit: "minute", count: 1 }
+      ]);*/
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
@@ -31,12 +40,14 @@ function createMultiTimelineChart(data, category, values, container, series_name
     series.dataFields.dateX = category;
     series.strokeWidth = 3;
     series.name = series_names[0];
+    //series.groupFields.valueY = "average";
 
     var series2 = chart.series.push(new am4charts.LineSeries());
     series2.dataFields.valueY = values[1];
     series2.dataFields.dateX = category;
     series2.strokeWidth = 3;
     series2.name = series_names[1];
+    //series2.groupFields.valueY = "average";
 
     series.interpolationDuration = 500;
     series.defaultState.transitionDuration = 0;
@@ -50,15 +61,21 @@ function createMultiTimelineChart(data, category, values, container, series_name
         dateAxis.zoom({ start: 1-30/data.length, end: 1 }, false, true);        
     });
 
+    chart.events.on("beforedatavalidated", function(ev) {
+        chart.data.sort(function(a, b) {
+          return (new Date(a[category])) - (new Date(b[category]));
+        });
+      });
+
     return chart;
 }
 
-function createBulletChart(data, category, value, container, series_name){
+function createBarChart(data, category, value, container, series_name){
     var chart = am4core.create(container, am4charts.XYChart);
     chart.data = data;
     chart.zoomOutButton.disabled = true;
 
-    chart.dateFormatter.inputDateFormat = "yyyy-MM-d hh:mm:ss";
+    chart.dateFormatter.inputDateFormat = "YYYY-mm-dd H:mm:ss";
     // Enable cursor
     //chart.cursor = new am4charts.XYCursor();
     // Enable horizontal scrollbar
@@ -71,10 +88,20 @@ function createBulletChart(data, category, value, container, series_name){
         "timeUnit": "second",
         "count": 1
     } 
-    dateAxis.dateFormats.setKey("second", "h:mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("second", "h:mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("minute", "h:mm a");
-    dateAxis.periodChangeDateFormats.setKey("hour", "h:mm a");  
+    dateAxis.dateFormats.setKey("second", "mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("second", "mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("minute", "mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("hour", "H:mm:ss");  
+    dateAxis.periodChangeDateFormats.setKey("day", "d/m/y H:mm:ss");
+    /*
+    dateAxis.groupData = true;
+    dateAxis.groupCount = 1;
+    dateAxis.groupIntervals.setAll([
+        { timeUnit: "second", count: 60 },
+        { timeUnit: "minute", count: 1 },
+        //{ timeUnit: "hour", count: 1 },
+        //{ timeUnit: "day", count: 1 },
+      ]);*/
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
@@ -87,10 +114,17 @@ function createBulletChart(data, category, value, container, series_name){
     series.dataFields.dateX = category;
     series.strokeWidth = 0;
     series.name = series_name;
+    series.groupFields.valueY = "average";
 
     chart.events.on("datavalidated", function () {
         dateAxis.zoom({ start: 1-10/data.length, end: 1 }, false, true);        
     });
+
+    chart.events.on("beforedatavalidated", function(ev) {
+        chart.data.sort(function(a, b) {
+          return (new Date(a[category])) - (new Date(b[category]));
+        });
+      });
 
     return chart;
 }
@@ -174,5 +208,5 @@ function createGaugeChart(data, container, series_name){
         axis2.invalidate();
     });
 
-    return hand;
+    return [hand,label];
 }
