@@ -8,9 +8,6 @@ function createMultiTimelineChart(data, category, values, container, series_name
     chart.zoomOutButton.disabled = true;
 
     chart.dateFormatter.inputDateFormat = "YYYY-mm-dd H:mm:ss";
-    // Enable cursor
-    //chart.cursor = new am4charts.XYCursor();
-    // Enable horizontal scrollbar
     chart.scrollbarX = new am4core.Scrollbar();
     chart.scrollbarX.parent = chart.bottomAxesContainer;
 
@@ -20,18 +17,11 @@ function createMultiTimelineChart(data, category, values, container, series_name
         "timeUnit": "second",
         "count": 1
     } 
-    dateAxis.dateFormats.setKey("second", "mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("second", "mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("minute", "mm:ss");
+    dateAxis.dateFormats.setKey("second", "H:mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("second", "H:mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("minute", "H:mm:ss");
     dateAxis.periodChangeDateFormats.setKey("hour", "H:mm:ss");  
     dateAxis.periodChangeDateFormats.setKey("day", "d/m/y H:mm:ss");
-    /*
-    dateAxis.groupData = true;
-    dateAxis.groupCount = 1;
-    dateAxis.groupIntervals.setAll([
-        { timeUnit: "second", count: 1 },
-        { timeUnit: "minute", count: 1 }
-      ]);*/
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
@@ -40,14 +30,12 @@ function createMultiTimelineChart(data, category, values, container, series_name
     series.dataFields.dateX = category;
     series.strokeWidth = 3;
     series.name = series_names[0];
-    //series.groupFields.valueY = "average";
 
     var series2 = chart.series.push(new am4charts.LineSeries());
     series2.dataFields.valueY = values[1];
     series2.dataFields.dateX = category;
     series2.strokeWidth = 3;
     series2.name = series_names[1];
-    //series2.groupFields.valueY = "average";
 
     series.interpolationDuration = 500;
     series.defaultState.transitionDuration = 0;
@@ -58,7 +46,7 @@ function createMultiTimelineChart(data, category, values, container, series_name
     dateAxis.rangeChangeDuration = 500;
 
     chart.events.on("datavalidated", function () {
-        dateAxis.zoom({ start: 1-30/data.length, end: 1 }, false, true);        
+        dateAxis.zoom({ start: 1-10/data.length, end: 1 }, false, true);        
     });
 
     chart.events.on("beforedatavalidated", function(ev) {
@@ -76,9 +64,6 @@ function createBarChart(data, category, value, container, series_name){
     chart.zoomOutButton.disabled = true;
 
     chart.dateFormatter.inputDateFormat = "YYYY-mm-dd H:mm:ss";
-    // Enable cursor
-    //chart.cursor = new am4charts.XYCursor();
-    // Enable horizontal scrollbar
     chart.scrollbarX = new am4core.Scrollbar();
     chart.scrollbarX.parent = chart.bottomAxesContainer;
 
@@ -88,28 +73,15 @@ function createBarChart(data, category, value, container, series_name){
         "timeUnit": "second",
         "count": 1
     } 
-    dateAxis.dateFormats.setKey("second", "mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("second", "mm:ss");
-    dateAxis.periodChangeDateFormats.setKey("minute", "mm:ss");
+    dateAxis.dateFormats.setKey("second", "H:mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("second", "H:mm:ss");
+    dateAxis.periodChangeDateFormats.setKey("minute", "H:mm:ss");
     dateAxis.periodChangeDateFormats.setKey("hour", "H:mm:ss");  
     dateAxis.periodChangeDateFormats.setKey("day", "d/m/y H:mm:ss");
-    /*
-    dateAxis.groupData = true;
-    dateAxis.groupCount = 1;
-    dateAxis.groupIntervals.setAll([
-        { timeUnit: "second", count: 60 },
-        { timeUnit: "minute", count: 1 },
-        //{ timeUnit: "hour", count: 1 },
-        //{ timeUnit: "day", count: 1 },
-      ]);*/
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
     var series = chart.series.push(new am4charts.ColumnSeries());
-    //var bullet = series.bullets.push(new am4charts.Bullet());
-    //var square = bullet.createChild(am4core.Rectangle);
-    //square.width = 10;
-    //square.height = 10;
     series.dataFields.valueY = value;
     series.dataFields.dateX = category;
     series.strokeWidth = 0;
@@ -193,14 +165,14 @@ function createGaugeChart(data, container, series_name){
     label.y = am4core.percent(100);
     label.horizontalCenter = "middle";
     label.verticalCenter = "bottom";
-    label.text = "50%";
+    label.text = data.toString()+"%";
 
     var hand = chart.hands.push(new am4charts.ClockHand());
     hand.axis = axis2;
     hand.innerRadius = am4core.percent(20);
     hand.startWidth = 10;
     hand.pin.disabled = true;
-    hand.value = 50;
+    hand.value = data;
 
     hand.events.on("propertychanged", function(ev) {
         range0.endValue = ev.target.value;

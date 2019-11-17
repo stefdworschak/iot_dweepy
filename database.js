@@ -40,7 +40,7 @@ function createSample(){
             console.log("Saving Sample")
             console.log(dweet.content);
             let arr = JSON.parse(localStorage.getItem("arr")) == null ? [] : JSON.parse(localStorage.getItem("arr"));
-            if(arr.length >= 100){
+            if(arr.length >= 10){
                 arr.unshift();
             }
             const opt = {hour:"2-digit", minute: "2-digit", second: "2-digit"}

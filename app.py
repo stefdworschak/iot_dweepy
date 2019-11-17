@@ -59,7 +59,6 @@ alarm_count = 0
 # Function that checks if the alarm should sound or not
 # And check if it is snoozing, increment the snooze counter 
 # And reset the snooze variables
-#def alarm_sound(threadname):
 def alarm_sound():
     global snooze
     global button_sensor_value
@@ -98,7 +97,6 @@ def alarm_sound():
             + "\n" + "Ill: " + str(light_sensor_value) + " / " + str(threshold))  
         snooze_count += 1 
     
-    #thread.exit()
     return button_sensor_value
 
 # function to send
@@ -107,10 +105,9 @@ def send_info(threadname, url):
     global last
     global temp
     global arr
-
-    #df = pandas.DataFrame(arr)
-    #print(df.head())
+    
     if last != temp:
+        #Using grequests for async sending the data instead of dweepy
         #dweepy.dweet_for(thing_id,temp)
         res = grequests.post(url, data=temp)
         print(grequests.map([res]))
@@ -137,10 +134,6 @@ while True:
 
         if light_sensor_value > threshold:
             alarm_sound()
-            #try:
-            #    thread.start_new_thread(alarm_sound,("Thread2-"+str(thread_id),))
-            #except:
-            #    print("Error starting thread for alarm sound. ")
         else:
             grovepi.digitalWrite(led,0)
             grovepi.digitalWrite(buzzer,0)
@@ -168,10 +161,7 @@ while True:
         # Create a new thread every time 
         # when sending the information to dweet.io
         # in order to avoid delay from synchonous event
-        try:   
-            # Check if the temporary array has for more than 30 seconds
-            #seconds = (datetime.datetime(arr[0].ts) - datetime.datetime(arr[0].ts)).total_seconds()
-            #if seconds > 30:
+        try:
             # Create dweet.io URL
             url = "https://dweet.io/dweet/for/test_"+thing_id
             thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )

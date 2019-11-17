@@ -23,7 +23,7 @@ $(document).ready(function(){
 
         chart1 = createMultiTimelineChart(temperature, "ts", ["temperature","humidity"], "temperature_container",["Temperature","Humidity"]);
         chart2 = createBarChart(lux, "ts", "illuminance", "illuminance_container","Illuminance");
-        chart3 = createGaugeChart(arr[arr.length-1].threshold, "threshold_container", "Threshold");
+        chart3 = createGaugeChart((Math.round((Number(arr[arr.length-1].threshold) / 900.0) * 100,0)), "threshold_container", "Threshold");
         gaugeHand = chart3[0];
         gaugeLabel = chart3[1];
         
