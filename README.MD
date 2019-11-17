@@ -7,7 +7,7 @@ Deciding which of these sensors to use and in which form to apply them to a solu
 In the end the iOT alarm clock only uses the light sensor, the rotary angle sensor and the temperature and humidity sensor to build an IoT alarm clock that would be triggered based on the illuminance level.
 ## Implementation
 ### Grove Pi setup
-![Grove Pi Diagram](stefdworschak.github.com/iot_dweepy/img/grove_pi_diagram.png)
+![Grove Pi Diagram](img/grove_pi_diagram.png)
 ### Alarm trigger and threshold
 Based on some initial observations the light sensor would not exceed 800 lux even in room lighting conditions and based on research (en.wikipedia.org, 2019) sunrise should be around 400 lux and overcast days around 1000 lux. Therefore, the rotary angle sensor was used to set and adjust a threshold that would be used to trigger the alarm. The rotary angle sensor measures degrees from 0 to 300 and multiplying the degree by 3 seemed a good approach to test the system. Thus, this was the logic put in place.
 ### Multiple Threads and asynchronous requests
