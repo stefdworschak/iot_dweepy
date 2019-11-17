@@ -163,17 +163,17 @@ while True:
             temp['location'] = json_data['location']
             file.close()
         
-        arr.append(temp)
+        #arr.append(temp)
         # Create a new thread every time 
         # when sending the information to dweet.io
         # in order to avoid delay from synchonous event
         try:   
             # Check if the temporary array has for more than 30 seconds
-            seconds = (datetime.datetime(arr[0].ts) - datetime.datetime(arr[0].ts)).total_seconds()
-            if seconds > 30:
+            #seconds = (datetime.datetime(arr[0].ts) - datetime.datetime(arr[0].ts)).total_seconds()
+            #if seconds > 30:
             # Create dweet.io URL
-                url = "https://dweet.io/dweet/for/test_"+thing_id
-                thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
+            url = "https://dweet.io/dweet/for/test_"+thing_id
+            thread.start_new_thread( send_info, ("Thread-"+str(thread_id), url, ) )
         except:
             print("Error: unable to start thread")
 
