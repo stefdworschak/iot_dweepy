@@ -8,7 +8,7 @@ import grovepi
 from grovepi import *
 from grove_rgb_lcd import *
 import dweepy
-import pandas
+#import pandas
 
 import mongo_db as m
 
@@ -107,12 +107,12 @@ def send_info(threadname, url):
     global temp
     global arr
 
-    df = pandas.DataFrame(arr)
+    #df = pandas.DataFrame(arr)
     print(df.head())
-    #if last != temp:
+    if last != temp:
         #dweepy.dweet_for(thing_id,temp)
-        #res = grequests.post(url, data=temp)
-        #print(grequests.map([res]))
+        res = grequests.post(url, data=temp)
+        print(grequests.map([res]))
     thread.exit()
 
 while True:
