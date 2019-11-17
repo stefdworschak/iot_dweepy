@@ -45,14 +45,15 @@ import mongo_db as m
 # Digital input ports
 # SIG,NC,VCC,GND
 dht_sensor_port = 7 # Temperature and Humidity sensor on D7
+button_sensor = 3
+led = 4
+buzzer = 8
 
 # Analog input ports
 # SIG,NC,VCC,GND
 potentiometer = 0 # Angle sensor on A0
 light_sensor = 1 # Light sensor on A1
-button_sensor = 3
-led = 4
-buzzer = 8
+
 
 # Setting the sensor type for the Temperature and Humidity Sensor
 dht_sensor_type = 0
